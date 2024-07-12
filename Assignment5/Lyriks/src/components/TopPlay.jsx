@@ -1,10 +1,14 @@
-import { useEffect, useRef } from "react";
+/* eslint-disable import/no-unresolved */
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper";
+
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { useGetTopChartsQuery } from "../redux/services/shazamCore";
+
 import "swiper/css";
 import "swiper/css/free-mode";
 
@@ -56,13 +60,14 @@ const TopChartCard = ({
 const TopPlay = () => {
     const dispatch = useDispatch();
     const { activeSong, isPlaying } = useSelector((state) => state.player);
-    const { data } = [];
+    const { data } = useGetTopChartsQuery();
     const divRef = useRef(null);
 
     useEffect(() => {
         divRef.current.scrollIntoView({ behavior: "smooth" });
     });
 
+    console.log(data);
     const topPlays = data?.slice(0, 5);
 
     const handlePauseClick = () => {
@@ -70,7 +75,7 @@ const TopPlay = () => {
     };
 
     const handlePlayClick = (song, i) => {
-        dispatch(setActiveSong({ song, i }));
+        dispatch(setActiveSong({ song, data, i }));
         dispatch(playPause(true));
     };
 
@@ -147,4 +152,5 @@ const TopPlay = () => {
         </div>
     );
 };
+
 export default TopPlay;
