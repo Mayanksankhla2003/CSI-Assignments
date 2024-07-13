@@ -66,9 +66,7 @@ const TopPlay = () => {
     useEffect(() => {
         divRef.current.scrollIntoView({ behavior: "smooth" });
     });
-
-    console.log(data);
-    const topPlays = data?.slice(0, 5);
+    const topPlays = Array.isArray(data) ? data?.slice(0, 5) : [];
 
     const handlePauseClick = () => {
         dispatch(playPause(false));
