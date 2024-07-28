@@ -5,9 +5,11 @@ import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 import myContext from "../context/data/myContext";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
+    const cartItems = useSelector((state) => state.cart);
 
     const { toggleMode, mode } = useContext(myContext);
 
@@ -117,20 +119,24 @@ export default function Navbar() {
                                         ""
                                     )}
 
-                                    <div className="flow-root">
-                                        <Link
-                                            onClick={logout}
-                                            className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
-                                            style={{
-                                                color:
-                                                    mode === "dark"
-                                                        ? "white"
-                                                        : "",
-                                            }}
-                                        >
-                                            Logout
-                                        </Link>
-                                    </div>
+                                    {user ? (
+                                        <div className="flow-root">
+                                            <Link
+                                                onClick={logout}
+                                                className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                                                style={{
+                                                    color:
+                                                        mode === "dark"
+                                                            ? "white"
+                                                            : "",
+                                                }}
+                                            >
+                                                Logout
+                                            </Link>
+                                        </div>
+                                    ) : (
+                                        ""
+                                    )}
                                     <div className="flow-root">
                                         <Link
                                             to={"/"}
@@ -284,16 +290,23 @@ export default function Navbar() {
                                     ) : (
                                         ""
                                     )}
-                                    <a
-                                        onClick={logout}
-                                        className="text-sm font-medium text-gray-700 cursor-pointer  "
-                                        style={{
-                                            color:
-                                                mode === "dark" ? "white" : "",
-                                        }}
-                                    >
-                                        Logout
-                                    </a>
+
+                                    {user ? (
+                                        <a
+                                            onClick={logout}
+                                            className="text-sm font-medium text-gray-700 cursor-pointer  "
+                                            style={{
+                                                color:
+                                                    mode === "dark"
+                                                        ? "white"
+                                                        : "",
+                                            }}
+                                        >
+                                            Logout
+                                        </a>
+                                    ) : (
+                                        ""
+                                    )}
                                 </div>
 
                                 <div className="hidden lg:ml-8 lg:flex">
@@ -379,10 +392,10 @@ export default function Navbar() {
                                                         : "",
                                             }}
                                         >
-                                            0
+                                            {cartItems.length}
                                         </span>
                                         <span className="sr-only">
-                                            items in cart, view bag
+                                            items in cart
                                         </span>
                                     </Link>
                                 </div>
