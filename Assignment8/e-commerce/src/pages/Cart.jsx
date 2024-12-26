@@ -23,7 +23,7 @@ function Cart() {
     }, [cartItems]);
 
     const shipping = parseInt(100);
-    const grandTotal = shipping + totalAmount;
+    const grandTotal = totalAmount;
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -59,8 +59,8 @@ function Cart() {
             }),
         };
         var options = {
-            key: "",
-            key_secret: "",
+            key: "rzp_test_UCfq0aNUW2NCWC",
+            key_secret: "3qdVCXJYrtqns3XvwySi5oVx",
             amount: parseInt(grandTotal * 100),
             currency: "INR",
             order_receipt: "order_rcptid_" + name,
